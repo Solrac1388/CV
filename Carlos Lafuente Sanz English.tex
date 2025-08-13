@@ -1,0 +1,323 @@
+%-----------------------------------------------------------------------------------------------------------------------------------------------%
+%	The MIT License (MIT)
+%
+%	Copyright (c) 2021 Jitin Nair
+%
+%	Permission is hereby granted, free of charge, to any person obtaining a copy
+%	of this software and associated documentation files (the "Software"), to deal
+%	in the Software without restriction, including without limitation the rights
+%	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+%	copies of the Software, and to permit persons to whom the Software is
+%	furnished to do so, subject to the following conditions:
+%	
+%	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+%	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+%	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+%	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+%	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+%	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+%	THE SOFTWARE.
+%	
+%
+%-----------------------------------------------------------------------------------------------------------------------------------------------%
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT DEFINITION
+%----------------------------------------------------------------------------------------
+
+% article class because we want to fully customize the page and not use a cv template
+\documentclass[a4paper,10pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{lettrine}
+
+%tabularx environment
+\usepackage{tabularx}
+
+%for lists within experience section
+\usepackage{enumitem}
+
+%for english date
+\usepackage[english]{babel}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
+
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
+
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\normalsize\scshape\raggedright\bfseries}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
+
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{
+	colorlinks,
+	breaklinks,
+	urlcolor=black,
+	linkcolor=black
+}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
+
+%for social icons
+\usepackage{fontawesome5}
+\newcommand{\smallblacksquare}{\raisebox{0.4ex}{\rule{0.6ex}{0.6ex}}}
+
+%debug page outer frames
+%\usepackage{showframe}
+
+% job listing environments
+\newenvironment{jobshort}[4]
+{
+	\begin{tabularx}{\linewidth}{@{}l X r@{}}
+		\textbf{#1} & \hfill & \textbf{#2} \\
+		\small\textit{#3} & \hfill & \small\textit{#4} \\[3.75pt]
+	\end{tabularx}
+}
+{
+}
+
+\newenvironment{joblong}[4]
+{
+	\begin{tabularx}{\linewidth}{@{}l X r@{}}
+		\textbf{#1} & \hfill & \textbf{#2} \\
+		\small\textit{#3} & \hfill & \small\textit{#4} \\[3.75pt]
+	\end{tabularx}
+	\begin{minipage}[t]{\linewidth}
+		\begin{itemize}[nosep,after=\strut, leftmargin=1em, itemsep=3pt,label=\smallblacksquare]
+		}
+		{
+		\end{itemize}
+	\end{minipage}    
+}
+
+\newenvironment{projectlong}[4]
+{
+	\begin{tabularx}{\linewidth}{@{}l X r@{}}
+		\textbf{#1} & \hfill & \textbf{#2} \\
+		\small\textit{#3} & \hfill & \small\textit{#4} \\[3.75pt]
+	\end{tabularx}
+	\begin{minipage}[t]{\linewidth}
+		\begin{itemize}[nosep,after=\strut, leftmargin=1em, itemsep=3pt,label=\smallblacksquare]
+		}
+		{
+		\end{itemize}
+	\end{minipage}    
+}
+
+\newenvironment{educationshort}[4]
+{
+	\begin{tabularx}{\linewidth}{@{}l X r@{}}
+		\textbf{#1} & \hfill & \textbf{#2} \\
+		\small\textit{#3} & \hfill & \small\textit{#4} \\[3.75pt]
+	\end{tabularx}
+}
+{
+}
+
+\newenvironment{educationlong}[4]
+{
+	\begin{tabularx}{\linewidth}{@{}l X r@{}}
+		\textbf{#1} & \hfill & \textbf{#2} \\
+		\small\textit{#3} & \hfill & \small\textit{#4} \\[3.75pt]
+	\end{tabularx}
+	\begin{minipage}[t]{\linewidth}
+		\begin{itemize}[nosep,after=\strut, leftmargin=1em, itemsep=3pt,label=\smallblacksquare]
+		}
+		{
+		\end{itemize}
+	\end{minipage}    
+}
+
+\newenvironment{publicationlong}[4]
+{
+	\begin{tabularx}{\linewidth}{@{}l X r@{}}
+		\textbf{#1} & \hfill & \textbf{#2} \\
+		\small\textit{#3} & \hfill & \small\textit{#4} \\[3.75pt]
+	\end{tabularx}
+	\begin{minipage}[t]{\linewidth}
+		\begin{itemize}[nosep,after=\strut, leftmargin=1em, itemsep=3pt,label=\smallblacksquare]
+		}
+		{
+		\end{itemize}
+	\end{minipage}    
+}
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+	
+	% non-numbered pages
+	\pagestyle{empty} 
+	
+	%----------------------------------------------------------------------------------------
+	%	TITLE
+	%----------------------------------------------------------------------------------------
+	
+	\begin{flushleft}
+		\Huge{\textbf{Carlos Lafuente Sanz}} \\[4pt]
+		\vspace{4pt}
+		\normalsize
+		\faEnvelope \ \href{mailto:carlos.lafuente.sanz.es@gmail.com}{carlos.lafuente.sanz.es@gmail.com} \\
+		\faMobile \ (+34) 609 975 742 \\
+		\faLinkedin \ \href{https://linkedin.com/in/carlos-lafuente-sanz}{linkedin.com/in/carlos-lafuente-sanz} \\
+		\faGithub \ \href{https://github.com/Solrac1388}{github.com/Solrac1388} \\
+		\faHome \ Madrid, Spain
+	\end{flushleft}
+	\vspace{-10pt}
+	\noindent\titlerule
+	\vspace{8pt}
+	
+	%----------------------------------------------------------------------------------------
+	% EXPERIENCE SECTIONS
+	%----------------------------------------------------------------------------------------
+	
+	%Experience
+	\section{EXPERIENCE}
+	
+	\begin{joblong}{GISAI – UPM}{Feb. 2023 - Present}{Research Associate}{Madrid, Spain}
+		\item The Advanced Telecommunications Networks and Services Engineering Group is officially recognized by the Technical University of Madrid.
+		\item My participation in the research group mainly involves the development and organization of different projects proposed by the professors who make up the group, in addition to the development of personal projects.
+	\end{joblong}
+	
+	\begin{joblong}{NTT DATA}{Mar. 2025 – Aug. 2025}{Data Engineering Intern}{Madrid, Spain}
+		\item Collaboration on banking projects for BBVA in the Data \& Analytics area: data ingestion, modeling and quality control.
+		\item Use of AWS and internal tools such as Kirbys, Hammurabis to ensure traceability, integrity and regulatory compliance.
+		\item Data automation and analysis with Python, optimizing workflows and processes.
+		\item Intensive initial training in data governance and continuous learning; strengthening competencies in teamwork, communication and problem solving in a corporate environment.
+	\end{joblong}
+	
+	%----------------------------------------------------------------------------------------
+	%	EDUCATION
+	%----------------------------------------------------------------------------------------
+	\section{EDUCATION}
+	
+	\begin{educationlong}{Universidad Politecnica de Madrid}{2020 - 2024}{Bachelor of Science in Software Engineering}{Madrid, Spain}
+		\item GPA: 7.0/10.0
+	\end{educationlong}
+	
+	\begin{educationlong}{Universidad Politecnica de Madrid}{2020 - 2025}{Bachelor of Science in Information Society Technologies}{Madrid, Spain}
+		\item GPA: 7.4/10.0
+	\end{educationlong}
+	
+	\begin{educationshort}{Universidad Politecnica de Madrid}{2024 - 2025}{Master's in Big Data Projects}{Madrid, Spain}
+	\end{educationshort}
+	
+	%\clearpage
+	
+	%Projects
+	\section{RELEVANT PROJECTS}
+	
+	\begin{projectlong}{Electoral System based on Blockchain Technologies}{Feb. 2024 – Jul. 2024}{Team Project}{GitHub, Java, NoSQL}
+		\item Bachelor's thesis based on the planning, design, development and deployment of a fully digitized electoral system using Blockchain technology, in order to digitize the complete process, increase transparency and allow all citizens to participate in the system.
+		\item \textbf{Final Grade: 10/10}
+	\end{projectlong}
+	
+	\begin{projectlong}{Certification Agency based on Blockchain Technologies}{May. 2025 – Jul. 2025}{Individual Project}{GitHub, Go, React Native, NoSQL}
+		\item Bachelor's thesis based on the planning, design, development and deployment of a fully digitized distributed personal certification agency using Blockchain technology, in order to increase transparency, increase user sovereignty and improve trust in institutions.
+		\item \textbf{Final Grade: 9.5/10}
+	\end{projectlong}
+	
+	\clearpage
+	
+	\begin{projectlong}{Industrial Real-Time Sensor System}{Feb. 2023 – Feb. 2024}{Team Project}{Python, MongoDB}
+		\item GISAI research group project based on the planning, design, development and deployment of a real-time sensor network at industrial level to guarantee the quality of company products.
+		\item Based on the collection of precise data to optimize processes, improve product quality, reduce operating costs and detect irregularities.
+	\end{projectlong}
+	
+	\begin{projectlong}{Feasibility Study of an IoT and Big Data System}{May. 2025 – Aug. 2025}{Individual Project}{LaTeX}
+		\item Master's thesis based on researching the feasibility of an intelligent sensor system in public transport with preventive violence detection capabilities and predictive optimization.
+		\item To support this research, 69 international studies and successful use cases have been analyzed to evaluate its implementation.
+		\item \textbf{Final Grade: Pending evaluation}
+	\end{projectlong}
+	
+	%----------------------------------------------------------------------------------------
+	%	PUBLICATIONS
+	%----------------------------------------------------------------------------------------
+	%\section{Publications}
+	% Uncomment and use this template when you have publications:
+	% \begin{publicationlong}{Electoral System based on Blockchain Technologies}{Feb. 2024 – Jul. 2024}{Team Project}{GitHub, Java, NoSQL}
+		%	\item Bachelor's thesis based on the planning, design, development and deployment of a system.
+		%	\item \textbf{Final Grade: 10/10}
+		% \end{publicationlong}
+	
+	%----------------------------------------------------------------------------------------
+	%	SKILLS
+	%----------------------------------------------------------------------------------------
+	\section{CERTIFICATIONS, SKILLS \& INTERESTS}
+	
+	\subsection*{Certifications}
+	\begin{tabularx}{\linewidth}{@{}l X@{}}
+		Languages & B2 - CEFR Level – TOEIC \\
+		Driving & Spanish Driving License: Type B \\
+	\end{tabularx}
+	
+	\subsection*{Technical Skills}
+	\begin{tabularx}{\linewidth}{@{}l X@{}}
+		Databases & MySQL, PostgreSQL, MongoDB, Redis \\
+		Programming & Java, Python, C, SQL, R, Go, React Native \\
+		Tools & GIT, Docker, Kirbys, Hammurabis, Pandas, Boto3, PySpark \\
+		Cloud Computing & Google Cloud, Azure, Amazon Web Services \\
+		Networking & Cisco, Juniper, Firewall, VPN, NAT \\
+	\end{tabularx}
+	
+	\subsection*{Personal Skills}
+	\begin{tabularx}{\linewidth}{@{}l X@{}}
+		Management & Strategic planning, Leadership, Project management \\
+		Interpersonal & Creativity, Critical thinking, Teamwork, Effective communication \\
+		Development & Adaptability to change, Continuous learning \\
+	\end{tabularx}
+	
+	\subsection*{Interests}
+	\begin{tabularx}{\linewidth}{@{}l X@{}}
+		Personal & Travel, economics, reading, technology, history, business, entrepreneurship \\
+	\end{tabularx}
+	
+	\vfill
+	\center{\footnotesize Last updated: \today}
+	
+\end{document}
