@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.6.9)  13 AUG 2025 17:55
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.6.9)  25 SEP 2025 18:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -824,10 +824,7 @@ Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 
 \@quotelevel=\count438
 \@quotereset=\count439
-(Carlos Lafuente Sanz Español.aux
-LaTeX Info: Redefining \. on input line 12.
-LaTeX Info: Redefining \% on input line 12.
-)
+(Carlos Lafuente Sanz Español.aux)
 \openout1 = `"Carlos Lafuente Sanz Español.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 192.
@@ -919,6 +916,9 @@ Package hyperref Info: Link coloring ON on input line 192.
 
 
 
+Package hyperref Warning: Rerun to get /PageLabels entry.
+
+
 LaTeX Font Warning: Font shape `TU/lmr/bx/sc' undefined
 (Font)              using `TU/lmr/bx/n' instead on input line 220.
 
@@ -944,29 +944,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 243--246
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--249
+Underfull \hbox (badness 10000) in paragraph at lines 247--250
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--259
+Underfull \hbox (badness 10000) in paragraph at lines 256--260
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 260--264
+Underfull \hbox (badness 10000) in paragraph at lines 261--265
 
  []
 
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 267--271
+Underfull \hbox (badness 10000) in paragraph at lines 268--272
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--277
+Underfull \hbox (badness 10000) in paragraph at lines 273--278
 
  []
 
@@ -994,10 +994,10 @@ l'.
 
  ) 
 Here is how much of TeX's memory you used:
- 21764 strings out of 409617
- 364881 string characters out of 5774014
+ 21761 strings out of 409617
+ 364807 string characters out of 5774014
  1946191 words of memory out of 5000000
- 43616 multiletter control sequences out of 15000+600000
+ 43613 multiletter control sequences out of 15000+600000
  560224 words of font info for 57 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  79i,8n,93p,1221b,3935s stack positions out of 10000i,1000n,20000p,200000b,200000s

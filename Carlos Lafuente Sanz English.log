@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.6.9)  13 AUG 2025 18:01
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.6.9)  25 SEP 2025 18:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -939,29 +939,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 243--246
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--249
+Underfull \hbox (badness 10000) in paragraph at lines 247--250
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--259
+Underfull \hbox (badness 10000) in paragraph at lines 256--260
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 260--264
+Underfull \hbox (badness 10000) in paragraph at lines 261--265
 
  []
 
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 267--271
+Underfull \hbox (badness 10000) in paragraph at lines 268--272
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--277
+Underfull \hbox (badness 10000) in paragraph at lines 273--278
 
  []
 
@@ -985,10 +985,10 @@ l'.
 
  ) 
 Here is how much of TeX's memory you used:
- 21364 strings out of 409617
- 359776 string characters out of 5774014
+ 21362 strings out of 409617
+ 359704 string characters out of 5774014
  1945191 words of memory out of 5000000
- 43217 multiletter control sequences out of 15000+600000
+ 43215 multiletter control sequences out of 15000+600000
  560224 words of font info for 57 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  79i,8n,93p,1221b,3848s stack positions out of 10000i,1000n,20000p,200000b,200000s
