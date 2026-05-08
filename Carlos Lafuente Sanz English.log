@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.6.9)  25 SEP 2025 18:33
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2025.6.9)  6 MAY 2026 18:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -929,39 +929,44 @@ Underfull \hbox (badness 10000) in paragraph at lines 227--233
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 239--242
+Underfull \hbox (badness 10000) in paragraph at lines 234--239
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 243--246
+Underfull \hbox (badness 10000) in paragraph at lines 245--248
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--250
+Underfull \hbox (badness 10000) in paragraph at lines 249--252
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--260
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 261--265
+Underfull \hbox (badness 10000) in paragraph at lines 253--256
 
  []
 
 [1
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 268--272
+Underfull \hbox (badness 10000) in paragraph at lines 262--266
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 273--278
+Underfull \hbox (badness 10000) in paragraph at lines 267--271
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 272--276
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 277--282
 
  []
 
@@ -987,7 +992,7 @@ l'.
 Here is how much of TeX's memory you used:
  21362 strings out of 409617
  359704 string characters out of 5774014
- 1945191 words of memory out of 5000000
+ 1941191 words of memory out of 5000000
  43215 multiletter control sequences out of 15000+600000
  560224 words of font info for 57 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
