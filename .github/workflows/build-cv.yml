@@ -38,14 +38,16 @@ jobs:
       - name: Renombrar PDFs y generar previsualizaciones
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq poppler-utils
+          sudo apt-get install -y -qq poppler-utils pngquant
           rm -rf docs/preview && mkdir -p docs/preview
 
           mv cv-es.pdf docs/Carlos-Lafuente-Sanz-CV-ES.pdf
           mv cv-en.pdf docs/Carlos-Lafuente-Sanz-CV-EN.pdf
 
-          pdftoppm -png -r 110 docs/Carlos-Lafuente-Sanz-CV-ES.pdf docs/preview/cv-es
-          pdftoppm -png -r 110 docs/Carlos-Lafuente-Sanz-CV-EN.pdf docs/preview/cv-en
+          pdftoppm -png -r 220 docs/Carlos-Lafuente-Sanz-CV-ES.pdf docs/preview/cv-es
+          pdftoppm -png -r 220 docs/Carlos-Lafuente-Sanz-CV-EN.pdf docs/preview/cv-en
+
+          pngquant --quality=70-95 --force --skip-if-larger --ext .png docs/preview/*.png || true
           ls -la docs/preview
 
       - name: Insertar previsualización en los README
