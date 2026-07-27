@@ -53,9 +53,21 @@ jobs:
       - name: Insertar previsualización en los README
         run: |
           python3 - <<'PY'
-          import glob, re
+          import glob, re, os, hashlib
 
           VIEWER = "https://solrac1388.github.io/CV/"
+
+          # El nombre lleva un hash del contenido: si el CV cambia, cambia la URL
+          # y la cache de GitHub no puede servir la imagen antigua.
+          for p in glob.glob("docs/preview/*.png"):
+              h = hashlib.sha256(open(p, "rb").read()).hexdigest()[:8]
+              destino = f"{p[:-4]}.{h}.png"
+              if p != destino:
+                  os.rename(p, destino)
+
+          def pagina(ruta):
+              m = re.search(r"-(\d+)\.[0-9a-f]{8}\.png$", ruta)
+              return int(m.group(1)) if m else 0
 
           targets = [
               ("README.md",    "es", "CV en español - página"),
@@ -67,7 +79,7 @@ jobs:
                   txt = open(readme, encoding="utf-8").read()
               except FileNotFoundError:
                   continue
-              imgs = sorted(glob.glob(f"docs/preview/cv-{lang}-*.png"))
+              imgs = sorted(glob.glob(f"docs/preview/cv-{lang}-*.png"), key=pagina)
               block = "\n".join(
                   f'<a href="{VIEWER}"><img src="{p}" width="100%" alt="{alt} {i}"></a>'
                   for i, p in enumerate(imgs, 1)
