@@ -9,5 +9,8 @@
 ---
 
 <!-- CV-PREVIEW:START -->
-<!-- Esta sección la regenera automáticamente .github/workflows/build-cv.yml -->
+
+<a href="https://solrac1388.github.io/CV/"><img src="docs/preview/cv-es-1.png" width="100%" alt="CV en español - página 1"></a>
+<a href="https://solrac1388.github.io/CV/"><img src="docs/preview/cv-es-2.png" width="100%" alt="CV en español - página 2"></a>
+
 <!-- CV-PREVIEW:END -->
