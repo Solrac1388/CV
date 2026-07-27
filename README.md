@@ -4,8 +4,6 @@
 
 [**⬇️ Descargar PDF**](docs/Carlos-Lafuente-Sanz-CV-ES.pdf) · [📄 Ver fuente LaTeX](cv-es.tex)
 
-🔎 **[Ver versión interactiva](https://solrac1388.github.io/CV/)** (zoom, texto seleccionable)
-
 ---
 
 <!-- CV-PREVIEW:START -->
