@@ -13,6 +13,6 @@
 *.synctex.gz
 *.toc
 
-# PDFs intermedios (el CI los renombra a Carlos-Lafuente-Sanz-CV-XX.pdf)
+# PDFs intermedios (el CI los mueve a docs/ con su nombre final)
 cv-es.pdf
 cv-en.pdf

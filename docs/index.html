@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Carlos Lafuente Sanz — CV</title>
+<style>
+  :root {
+    --bg: #f4f4f5;
+    --fg: #18181b;
+    --muted: #71717a;
+    --accent: #1e3a8a;
+    --card: #ffffff;
+    --border: #d4d4d8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#18181b; --fg:#f4f4f5; --muted:#a1a1aa; --card:#27272a; --border:#3f3f46; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: .65rem 1rem;
+    padding-top: max(.65rem, env(safe-area-inset-top));
+    display: flex; flex-wrap: wrap; gap: .5rem;
+    align-items: center; justify-content: space-between;
+  }
+  h1 { font-size: 1rem; margin: 0; font-weight: 600; }
+  nav { display: flex; gap: .4rem; align-items: center; }
+  button, .dl {
+    font: inherit; font-size: .875rem;
+    padding: .45rem .8rem;
+    border: 1px solid var(--border);
+    border-radius: .5rem;
+    background: transparent; color: var(--fg);
+    cursor: pointer; text-decoration: none;
+    min-height: 40px;               /* objetivo táctil cómodo */
+    display: inline-flex; align-items: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button[aria-pressed="true"] {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+  .dl { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  @media (prefers-color-scheme: dark) { .dl { color: #93c5fd; border-color: #93c5fd; } }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+  .page {
+    position: relative;
+    margin: 0 auto 1rem;
+    background: #fff;
+    box-shadow: 0 1px 4px rgb(0 0 0 / .18);
+    line-height: 0;
+  }
+  .page canvas { display: block; width: 100%; height: auto; }
+  #status { color: var(--muted); font-size: .875rem; padding: 2rem 0; text-align: center; }
+  .fallback { text-align: center; padding: 2rem 1rem; }
+
+  /* --- Capa de texto de PDF.js (necesaria para poder seleccionar y copiar) --- */
+  .textLayer {
+    position: absolute; inset: 0; overflow: clip;
+    text-align: initial; line-height: 1; opacity: 1;
+    transform-origin: 0 0; forced-color-adjust: none;
+    -webkit-text-size-adjust: none; text-size-adjust: none;
+    z-index: 1; caret-color: CanvasText;
+    --min-font-size: 1;
+    --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size));
+    --min-font-size-inv: calc(1 / var(--min-font-size));
+  }
+  .textLayer :is(span, br) {
+    color: transparent; position: absolute; white-space: pre;
+    cursor: text; transform-origin: 0% 0%;
+  }
+  .textLayer > :not(.markedContent),
+  .textLayer .markedContent span:not(.markedContent) {
+    z-index: 1;
+    --font-height: 0;
+    font-size: calc(var(--text-scale-factor) * var(--font-height));
+    --scale-x: 1; --rotate: 0deg;
+    transform: rotate(var(--rotate)) scaleX(var(--scale-x)) scale(var(--min-font-size-inv));
+  }
+  .textLayer .markedContent { display: contents; }
+  .textLayer span[role="img"] { user-select: none; cursor: default; }
+  .textLayer ::selection { background: rgb(30 58 138 / .3); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Carlos Lafuente Sanz — CV</h1>
+  <nav>
+    <button id="btn-es" data-lang="es" aria-pressed="true">Español</button>
+    <button id="btn-en" data-lang="en" aria-pressed="false">English</button>
+    <a id="download" class="dl" href="Carlos-Lafuente-Sanz-CV-ES.pdf" download>Descargar</a>
+  </nav>
+</header>
+
+<main>
+  <div id="status">Cargando…</div>
+  <div id="pages"></div>
+  <noscript>
+    <div class="fallback">
+      <p>Este visor necesita JavaScript.</p>
+      <p>
+        <a href="Carlos-Lafuente-Sanz-CV-ES.pdf">Descargar CV en español (PDF)</a> ·
+        <a href="Carlos-Lafuente-Sanz-CV-EN.pdf">Download CV in English (PDF)</a>
+      </p>
+    </div>
+  </noscript>
+</main>
+
+<script type="module">
+import * as pdfjsLib from "./pdfjs/pdf.min.js";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = "./pdfjs/pdf.worker.min.js";
+
+const DOCS = {
+  es: { file: "Carlos-Lafuente-Sanz-CV-ES.pdf", download: "Descargar", loading: "Cargando…", fail: "No se ha podido mostrar el CV." },
+  en: { file: "Carlos-Lafuente-Sanz-CV-EN.pdf", download: "Download",  loading: "Loading…",  fail: "The CV could not be displayed." },
+};
+
+// Safari en iOS limita el área total de un canvas. Nos quedamos muy por debajo.
+const MAX_CANVAS_PIXELS = 8_000_000;
+
+const pagesEl  = document.getElementById("pages");
+const statusEl = document.getElementById("status");
+const dlEl     = document.getElementById("download");
+const buttons  = [...document.querySelectorAll("button[data-lang]")];
+
+let current = "es";
+let token = 0;          // cancela renderizados obsoletos si cambias de idioma rápido
+
+function containerWidth() {
+  return Math.max(280, Math.min(pagesEl.clientWidth, 1000));
+}
+
+async function render(lang) {
+  const my = ++token;
+  const cfg = DOCS[lang];
+  current = lang;
+
+  buttons.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  dlEl.href = cfg.file;
+  dlEl.textContent = cfg.download;
+  document.documentElement.lang = lang;
+
+  statusEl.textContent = cfg.loading;
+  statusEl.style.display = "";
+  pagesEl.innerHTML = "";
+
+  try {
+    const pdf = await pdfjsLib.getDocument(cfg.file).promise;
+    if (my !== token) return;
+
+    const cssWidth = containerWidth();
+
+    for (let n = 1; n <= pdf.numPages; n++) {
+      const page = await pdf.getPage(n);
+      if (my !== token) return;
+
+      const scale    = cssWidth / page.getViewport({ scale: 1 }).width;
+      const viewport = page.getViewport({ scale });
+
+      // Nitidez en pantallas retina, con tope para no reventar el canvas en móvil.
+      let dpr = Math.min(window.devicePixelRatio || 1, 2);
+      while (viewport.width * dpr * viewport.height * dpr > MAX_CANVAS_PIXELS && dpr > 1) {
+        dpr -= 0.25;
+      }
+
+      const wrap = document.createElement("div");
+      wrap.className = "page";
+      wrap.style.width  = viewport.width + "px";
+      wrap.style.height = viewport.height + "px";
+
+      const canvas = document.createElement("canvas");
+      canvas.width  = Math.floor(viewport.width  * dpr);
+      canvas.height = Math.floor(viewport.height * dpr);
+      wrap.appendChild(canvas);
+
+      const textLayerDiv = document.createElement("div");
+      textLayerDiv.className = "textLayer";
+      textLayerDiv.style.setProperty("--total-scale-factor", scale);
+      wrap.appendChild(textLayerDiv);
+
+      pagesEl.appendChild(wrap);
+      statusEl.style.display = "none";
+
+      await page.render({
+        canvasContext: canvas.getContext("2d", { alpha: false }),
+        viewport,
+        transform: dpr !== 1 ? [dpr, 0, 0, dpr, 0, 0] : null,
+      }).promise;
+      if (my !== token) return;
+
+      const textLayer = new pdfjsLib.TextLayer({
+        textContentSource: page.streamTextContent(),
+        container: textLayerDiv,
+        viewport,
+      });
+      await textLayer.render();
+    }
+  } catch (err) {
+    console.error(err);
+    statusEl.style.display = "";
+    statusEl.innerHTML =
+      `${cfg.fail} <a href="${cfg.file}" download>${cfg.download} PDF</a>`;
+  }
+}
+
+buttons.forEach(b => b.addEventListener("click", () => {
+  if (b.dataset.lang !== current) render(b.dataset.lang);
+}));
+
+// Al girar el móvil o redimensionar, se vuelve a dibujar a la anchura nueva.
+let resizeTimer, lastWidth = 0;
+addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    const w = containerWidth();
+    if (Math.abs(w - lastWidth) > 20) { lastWidth = w; render(current); }
+  }, 250);
+});
+
+lastWidth = containerWidth();
+render("es");
+</script>
+
+</body>
+</html>

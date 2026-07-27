@@ -39,19 +39,21 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq poppler-utils
-          rm -rf preview && mkdir -p preview
+          rm -rf docs/preview && mkdir -p docs/preview
 
-          mv cv-es.pdf Carlos-Lafuente-Sanz-CV-ES.pdf
-          mv cv-en.pdf Carlos-Lafuente-Sanz-CV-EN.pdf
+          mv cv-es.pdf docs/Carlos-Lafuente-Sanz-CV-ES.pdf
+          mv cv-en.pdf docs/Carlos-Lafuente-Sanz-CV-EN.pdf
 
-          pdftoppm -png -r 110 Carlos-Lafuente-Sanz-CV-ES.pdf preview/cv-es
-          pdftoppm -png -r 110 Carlos-Lafuente-Sanz-CV-EN.pdf preview/cv-en
-          ls -la preview
+          pdftoppm -png -r 110 docs/Carlos-Lafuente-Sanz-CV-ES.pdf docs/preview/cv-es
+          pdftoppm -png -r 110 docs/Carlos-Lafuente-Sanz-CV-EN.pdf docs/preview/cv-en
+          ls -la docs/preview
 
       - name: Insertar previsualización en los README
         run: |
           python3 - <<'PY'
           import glob, re
+
+          VIEWER = "https://solrac1388.github.io/CV/"
 
           targets = [
               ("README.md",    "es", "CV en español - página"),
@@ -63,9 +65,9 @@ jobs:
                   txt = open(readme, encoding="utf-8").read()
               except FileNotFoundError:
                   continue
-              imgs = sorted(glob.glob(f"preview/cv-{lang}-*.png"))
+              imgs = sorted(glob.glob(f"docs/preview/cv-{lang}-*.png"))
               block = "\n".join(
-                  f'<img src="{p}" width="100%" alt="{alt} {i}">'
+                  f'<a href="{VIEWER}"><img src="{p}" width="100%" alt="{alt} {i}"></a>'
                   for i, p in enumerate(imgs, 1)
               )
               new = re.sub(
@@ -82,7 +84,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A -- '*.pdf' preview README.md README.en.md
+          git add -A -- docs README.md README.en.md
           if git diff --staged --quiet; then
             echo "Sin cambios que publicar."
           else

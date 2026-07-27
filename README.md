@@ -2,13 +2,12 @@
 
 **🇪🇸 Español** · [🇬🇧 English](README.en.md)
 
-[**⬇️ Descargar PDF**](Carlos-Lafuente-Sanz-CV-ES.pdf) · [📄 Ver fuente LaTeX](cv-es.tex)
+[**⬇️ Descargar PDF**](docs/Carlos-Lafuente-Sanz-CV-ES.pdf) · [📄 Ver fuente LaTeX](cv-es.tex)
+
+🔎 **[Ver versión interactiva](https://solrac1388.github.io/CV/)** (zoom, texto seleccionable)
 
 ---
 
 <!-- CV-PREVIEW:START -->
-
-<img src="preview/cv-es-1.png" width="100%" alt="CV en español - página 1">
-<img src="preview/cv-es-2.png" width="100%" alt="CV en español - página 2">
-
+<!-- Esta sección la regenera automáticamente .github/workflows/build-cv.yml -->
 <!-- CV-PREVIEW:END -->
