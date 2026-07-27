@@ -8,8 +8,8 @@
 
 <!-- CV-PREVIEW:START -->
 
-<a href="https://solrac1388.github.io/CV/"><img src="docs/preview/cv-es-1.9acda9d3.png" width="100%" alt="CV en español - página 1"></a>
-<a href="https://solrac1388.github.io/CV/"><img src="docs/preview/cv-es-2.c7aec28c.png" width="100%" alt="CV en español - página 2"></a>
+<a href="https://solrac1388.github.io/CV/"><img src="docs/preview/cv-es-1.061db3ec.png" width="100%" alt="CV en español - página 1"></a>
+<a href="https://solrac1388.github.io/CV/"><img src="docs/preview/cv-es-2.31127453.png" width="100%" alt="CV en español - página 2"></a>
 <a href="https://solrac1388.github.io/CV/"><img src="docs/preview/cv-es-3.b55f3aba.png" width="100%" alt="CV en español - página 3"></a>
 
 <!-- CV-PREVIEW:END -->
