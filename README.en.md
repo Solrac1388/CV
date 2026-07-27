@@ -7,5 +7,8 @@
 ---
 
 <!-- CV-PREVIEW:START -->
-<!-- This section is regenerated automatically by .github/workflows/build-cv.yml -->
+
+<img src="preview/cv-en-1.png" width="100%" alt="CV in English - page 1">
+<img src="preview/cv-en-2.png" width="100%" alt="CV in English - page 2">
+
 <!-- CV-PREVIEW:END -->
