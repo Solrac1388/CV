@@ -1,0 +1,18 @@
+# Archivos auxiliares de LaTeX
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+
+# PDFs intermedios (el CI los mueve a docs/ con su nombre final)
+cv-es.pdf
+cv-en.pdf

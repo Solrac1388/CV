@@ -1,0 +1,107 @@
+name: Compilar CVs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**.tex"
+      - "**.bib"
+      - ".github/workflows/build-cv.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-cv
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Compilar los .tex a PDF
+        uses: xu-cheng/texlive-action@v3
+        with:
+          run: |
+            for lang in es en; do
+              echo "::group::Compilando cv-$lang.tex"
+              latexmk -pdf -file-line-error -halt-on-error -interaction=nonstopmode cv-$lang.tex
+              latexmk -c cv-$lang.tex
+              echo "::endgroup::"
+            done
+
+      - name: Renombrar PDFs y generar previsualizaciones
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils pngquant
+          rm -rf docs/preview && mkdir -p docs/preview
+
+          mv cv-es.pdf docs/Carlos-Lafuente-Sanz-CV-ES.pdf
+          mv cv-en.pdf docs/Carlos-Lafuente-Sanz-CV-EN.pdf
+
+          pdftoppm -png -r 220 docs/Carlos-Lafuente-Sanz-CV-ES.pdf docs/preview/cv-es
+          pdftoppm -png -r 220 docs/Carlos-Lafuente-Sanz-CV-EN.pdf docs/preview/cv-en
+
+          pngquant --quality=70-95 --force --skip-if-larger --ext .png docs/preview/*.png || true
+          ls -la docs/preview
+
+      - name: Insertar previsualización en los README
+        run: |
+          python3 - <<'PY'
+          import glob, re, os, hashlib
+
+          VIEWER = "https://solrac1388.github.io/CV/"
+
+          # El nombre lleva un hash del contenido: si el CV cambia, cambia la URL
+          # y la cache de GitHub no puede servir la imagen antigua.
+          for p in glob.glob("docs/preview/*.png"):
+              h = hashlib.sha256(open(p, "rb").read()).hexdigest()[:8]
+              destino = f"{p[:-4]}.{h}.png"
+              if p != destino:
+                  os.rename(p, destino)
+
+          def pagina(ruta):
+              m = re.search(r"-(\d+)\.[0-9a-f]{8}\.png$", ruta)
+              return int(m.group(1)) if m else 0
+
+          targets = [
+              ("README.md",    "es", "CV en español - página"),
+              ("README.en.md", "en", "CV in English - page"),
+          ]
+
+          for readme, lang, alt in targets:
+              try:
+                  txt = open(readme, encoding="utf-8").read()
+              except FileNotFoundError:
+                  continue
+              imgs = sorted(glob.glob(f"docs/preview/cv-{lang}-*.png"), key=pagina)
+              block = "\n".join(
+                  f'<a href="{VIEWER}"><img src="{p}" width="100%" alt="{alt} {i}"></a>'
+                  for i, p in enumerate(imgs, 1)
+              )
+              new = re.sub(
+                  r"(<!-- CV-PREVIEW:START -->).*?(<!-- CV-PREVIEW:END -->)",
+                  lambda m: f"{m.group(1)}\n\n{block}\n\n{m.group(2)}",
+                  txt, flags=re.S,
+              )
+              if new != txt:
+                  open(readme, "w", encoding="utf-8").write(new)
+                  print(f"Actualizado {readme} ({len(imgs)} páginas)")
+          PY
+
+      - name: Publicar PDFs y previsualizaciones
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- docs README.md README.en.md
+          if git diff --staged --quiet; then
+            echo "Sin cambios que publicar."
+          else
+            git commit -m "CI: recompilar CVs [skip ci]"
+            git push
+          fi
